@@ -48,7 +48,7 @@ class TailProcess(protocol.ProcessProtocol):
 
 class LogWatcher(LineOnlyReceiver):
     POLL_INTERVAL = 0.1
-    TIMEOUT_DELAY = 10.0
+    TIMEOUT_DELAY = 90.0
     delimiter = os.linesep
 
     def __init__(self, logfile):

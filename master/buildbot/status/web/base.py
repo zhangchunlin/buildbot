@@ -302,6 +302,8 @@ class ActionResource(resource.Resource, AccessorMixin):
                 url, alert_msg = url
                 if alert_msg:
                     url += "?alert_msg=" + urllib.quote(alert_msg, safe='')
+            if isinstance(url,unicode):
+                url = url.encode("utf8")
             request.redirect(url)
             request.write("see <a href='%s'>%s</a>" % (url, url))
             try:
