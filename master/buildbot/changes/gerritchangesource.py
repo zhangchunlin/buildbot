@@ -181,10 +181,11 @@ class GerritChangeSource(base.ChangeSource):
 
         if "change" in event and "patchSet" in event:
             event_change = event["change"]
+            username = event_change["owner"].get("username","unknown")
             return self.addChange({
                 'author': "%s <%s>" % (
-                    event_change["owner"]["name"],
-                    event_change["owner"]["email"]),
+                    event_change["owner"].get("name",username),
+                    event_change["owner"].get("email","unknown@example.com")),
                 'project': event_change["project"],
                 'repository': "ssh://%s@%s:%s/%s" % (
                     self.username, self.gerritserver,
@@ -203,7 +204,7 @@ class GerritChangeSource(base.ChangeSource):
 
         if "submitter" in event:
             author = "%s <%s>" % (
-                event["submitter"]["name"], event["submitter"]["email"])
+                event["submitter"].get("name","unknown"), event["submitter"].get("email","unknown@example.com"))
 
         return self.addChange(dict(
             author=author,
